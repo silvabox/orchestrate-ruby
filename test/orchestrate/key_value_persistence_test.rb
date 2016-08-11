@@ -518,7 +518,7 @@ class KeyValuePersistenceTest < MiniTest::Unit::TestCase
   end
 
   def test_update_test_operation_checks_equality_of_field_value_success
-    test = [{ "op" => "test", "path" => "count", "value" => 1 }]
+    test = [{ "op" => "test", "path" => "count", "value" => 1, "negate" => false }]
     body = @kv.value
     body["count"] = 1
     @stubs.patch("/v0/items/#{@kv.key}") do |env|
@@ -544,7 +544,7 @@ class KeyValuePersistenceTest < MiniTest::Unit::TestCase
   end
 
   def test_update_test_operation_raises_error_with_non_existing_field
-    test = [{ "op" => "test", "path" => "foo", "value" => 1 }]
+    test = [{ "op" => "test", "path" => "foo", "value" => 1, "negate" => false }]
     body = @kv.value
     @stubs.patch("/v0/items/#{@kv.key}") do |env|
       assert_equal test, JSON.parse(env.body)
